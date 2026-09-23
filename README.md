@@ -39,7 +39,7 @@ Agent 岗位实际分三层。模型/算法层要 ML 背景，跟我们无关；
 | 1 | 让模型开口说话 | ✅ | `python/day1.py` |
 | 2 | 把它变成一个服务 | ✅ | `python/day2.py` |
 | 3 | 给它一份自己的资料（文档切分） | ✅ | `python/day3.py` |
-| 4 | 把意思变成数字（embedding + numpy 手算相似度） | ⬜ | — |
+| 4 | 把意思变成数字（embedding + numpy 手算相似度） | ✅ | `python/day4.py` |
 | 5 | 串成一个完整的 RAG | ⬜ | — |
 | 6 | 故意把它弄坏（本周最值钱的一天） | ⬜ | — |
 | 7 | 回头看，写下来 | ⬜ | — |
@@ -68,7 +68,7 @@ Agent 岗位实际分三层。模型/算法层要 ML 背景，跟我们无关；
 
 ## 怎么跑起来
 
-第一周的脚本都在 `python/`，直接依赖只有 3 个（`requests` / `fastapi` / `uvicorn`），另需一个模型 API Key。
+第一周的脚本都在 `python/`，直接依赖只有 4 个（`requests` / `fastapi` / `uvicorn` / `numpy`），另需一个模型 API Key。
 
 ```bash
 python3 -m venv .venv && source .venv/bin/activate
@@ -85,6 +85,7 @@ export ZHIPU_API_KEY="你自己的 Key"
 | `python/day1.py` | `python3 python/day1.py` | 终端打印出模型的一句话 |
 | `python/day2.py` | `cd python && uvicorn day2:app --reload` | 浏览器开 `127.0.0.1:8000/xmy/?message=你好` 能跟模型对话 |
 | `python/day3.py` | `python3 python/day3.py` | 把 `学习计划.md` 切成 10 段，打印每段长度和开头 |
+| `python/day4.py` | `python3 python/day4.py` | 按 `##`/`###` 切成 23 段并向量化（embedding-3），打印与问题最相关的 3 段及分数 |
 
 ## 进度记录
 
