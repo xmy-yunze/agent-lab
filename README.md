@@ -41,7 +41,7 @@ Agent 岗位实际分三层。模型/算法层要 ML 背景，跟我们无关；
 | 3 | 给它一份自己的资料（文档切分） | ✅ | `python/day3.py` |
 | 4 | 把意思变成数字（embedding + numpy 手算相似度） | ✅ | `python/day4.py` |
 | 5 | 串成一个完整的 RAG | ✅ | `python/day5.py` + `python/rag.py` |
-| 6 | 故意把它弄坏（本周最值钱的一天） | ⬜ | — |
+| 6 | 故意把它弄坏（本周最值钱的一天） | ✅ | `python/day6.py` + `python/day6_trace.py` |
 | 7 | 回头看，写下来 | ⬜ | — |
 
 每天**卡在哪、花了多久、以及当天最值钱的认知**，都记在 [`第一周-执行表.md`](./第一周-执行表.md) 的「打卡区」里 —— 那里比这张表有信息量。
@@ -86,8 +86,10 @@ export ZHIPU_API_KEY="你自己的 Key"
 | `python/day2.py` | `cd python && uvicorn day2:app --reload` | 浏览器开 `127.0.0.1:8000/xmy/?message=你好` 能跟模型对话 |
 | `python/day3.py` | `python3 python/day3.py` | 把 `学习计划.md` 切成 10 段，打印每段长度和开头 |
 | `python/day4.py` | `python3 python/day4.py` | 换一个问题，按相关度**从高到低**打印最相关的 3 段及分数（检索逻辑已抽到 `rag.py`） |
-| `python/rag.py` | （不单独跑，被 day4 / day5 共用） | 检索这条线上的三件事：`split_chunks`（切分）/ `embed`（向量化）/ `retrieve`（算分排序取 top-k） |
-| `python/day5.py` | `python3 python/day5.py` | **完整 RAG**：检索 top-3 → 拼进提示（带 `[1][2][3]` 编号）→ 让模型只依据资料回答并标注引用编号（换 `question` 只改一行） |
+| `python/rag.py` | （不单独跑，被 day4 / day5 共用） | 检索这条线上的三件事：`split_chunks`（切分，**带标题路径**）/ `embed`（向量化）/ `retrieve`（算分排序取 top-k） |
+| `python/day5.py` | `python3 python/day5.py "你的问题"` | **完整 RAG**：检索 top-3 → 拼进提示（带 `[1][2][3]` 编号）→ 让模型只依据资料回答并标注引用编号（问题从命令行参数进，缺省用 `KV Cache 是什么？`） |
+| `python/day6.py` | `python3 python/day6.py` | 四个**切分边界** case（标准 `##/###`、全是 `#`、夹 `####`、完全没标题）各切出几段 —— 用来暴露正则的边界 |
+| `python/day6_trace.py` | `python3 python/day6_trace.py` | **标题栈观察台**：逐行打印「行号 / 内容 / 判定 / 栈」看标题路径怎么生成；并给出三份文档修复前后的段数、以及「B 线」关键词覆盖的段数对照 |
 
 ## 进度记录
 

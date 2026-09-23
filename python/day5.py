@@ -1,6 +1,6 @@
 import numpy as np
 from rag import split_chunks, embed, retrieve
-import os,requests
+import os,requests,sys
 
 CHAT_URL="https://open.bigmodel.cn/api/paas/v4/chat/completions"
 MODEL="glm-4.7"
@@ -23,17 +23,20 @@ def build_prompt(question, hits):
 def ask(prompt):
     r=requests.post(CHAT_URL,
                 headers={"Authorization": f"Bearer {os.environ['ZHIPU_API_KEY']}"},
-                json={"model":MODEL,"messages":[{"role":"user","content":prompt}]},)
+                json={"model":MODEL,"messages":[{"role":"user","content":prompt}]},
+                timeout=60)
     if r.status_code!=200:
         raise RuntimeError(f"chat failed: {r.status_code} {r.text}")
     d=r.json()
     return d["choices"][0]["message"]["content"]
 
 if __name__=="__main__":
+    question=sys.argv[1] if len(sys.argv)>1 else "KV Cache 是什么？"
     chunks=split_chunks("学习计划.md")  
     mat=np.array(embed(chunks))  
-    question="红烧肉怎么做？"
     hits=retrieve(question,chunks,mat,k=3)
+    for idx, score, text in hits:
+        print(f"{score:.4f}  [{idx}] len={len(text):4d}  {text.split(chr(10))[0][:40]}")
     prompt=build_prompt(question,hits)
     print("=== Prompt ===")
     print(prompt)
