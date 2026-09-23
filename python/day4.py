@@ -37,7 +37,7 @@ vecs=np.array(vecs)
 scores=(q_vec@vecs.T)/(np.linalg.norm(q_vec)*np.linalg.norm(vecs,axis=1))
 
 order=np.argsort(scores)
-top3=order[-3:]
+top3=order[::-1][:3]
 for idx in top3:
     preview=chunks[idx][:60].replace("\n"," ")
     print(f"score: {scores[idx]:.4f}, chunk: {preview}")

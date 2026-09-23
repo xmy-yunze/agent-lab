@@ -85,7 +85,7 @@ export ZHIPU_API_KEY="你自己的 Key"
 | `python/day1.py` | `python3 python/day1.py` | 终端打印出模型的一句话 |
 | `python/day2.py` | `cd python && uvicorn day2:app --reload` | 浏览器开 `127.0.0.1:8000/xmy/?message=你好` 能跟模型对话 |
 | `python/day3.py` | `python3 python/day3.py` | 把 `学习计划.md` 切成 10 段，打印每段长度和开头 |
-| `python/day4.py` | `python3 python/day4.py` | 按 `##`/`###` 切成 23 段并向量化（embedding-3），打印与问题最相关的 3 段及分数 |
+| `python/day4.py` | `python3 python/day4.py` | 按 `##`/`###` 切成 23 段并向量化（embedding-3），按相关度**从高到低**打印前 3 段及分数 |
 
 ## 进度记录
 
