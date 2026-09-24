@@ -23,7 +23,7 @@ def build_prompt(question, hits):
 def ask(prompt):
     r=requests.post(CHAT_URL,
                 headers={"Authorization": f"Bearer {os.environ['ZHIPU_API_KEY']}"},
-                json={"model":MODEL,"messages":[{"role":"user","content":prompt}]},
+                json={"model":MODEL,"temperature":0,"messages":[{"role":"user","content":prompt}]},
                 timeout=60)
     if r.status_code!=200:
         raise RuntimeError(f"chat failed: {r.status_code} {r.text}")

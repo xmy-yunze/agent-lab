@@ -20,6 +20,7 @@ def split_chunks(path):
     stack=[]
     chunks=[]
     buf=[]
+    in_fence=False
     def seal():
         if not buf:
             return
@@ -29,7 +30,15 @@ def split_chunks(path):
             return
         prefix=" > ".join(t for _,t in stack[:-1])
         chunks.append(prefix+"\n"+body if prefix else body)
+
     for line in text.split("\n"):
+        if line.startswith("```"):       # 碰到围栏：翻转开关（围栏行本身是正文，别丢）
+            in_fence=not in_fence
+            buf.append(line)
+            continue
+        if in_fence:                     # 在代码块里：一律当正文
+            buf.append(line)
+            continue
         m=HEADING_RE.match(line)
         if not m:
             buf.append(line)
