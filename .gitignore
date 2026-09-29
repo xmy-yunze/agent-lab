@@ -10,3 +10,7 @@ __pycache__/
 
 # macOS
 .DS_Store
+
+# Gradle / Java 构建产物（可重新生成，别提交）
+build/
+.gradle/
