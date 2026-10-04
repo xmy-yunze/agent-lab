@@ -1,5 +1,6 @@
 package com.example.agentloop.registry;
 
+import tools.jackson.core.JacksonException;
 import tools.jackson.databind.JsonNode;
 import tools.jackson.databind.ObjectMapper;
 
@@ -61,6 +62,41 @@ public class ToolRegistry {
                     "校验密码格式",
                     "校验密码是否符合要求",
                     List.of(new ToolParam("password", "string", true))
+            ),
+            new ToolDefinition("查询最近订单",
+                    "根据用户userId，查询该用户最近的订单集合，返回订单id、商品id、单笔金额",
+                    List.of(new ToolParam("userId", "string", true))
+            ),
+            new ToolDefinition("计算订单总金额",
+                    "接收订单列表，计算全部订单金额总和，返回总金额数值",
+                    List.of(new ToolParam("orderListJson", "string", true))
+            ),
+            new ToolDefinition("查询库存",
+                    "根据商品id查询当前商品库存数量，返回库存数字",
+                    List.of(new ToolParam("goodsId", "string", true))
+            ),
+            new ToolDefinition("发送站内通知",
+                    "向指定用户发送一条站内通知消息，返回发送成功标记",
+                    List.of(
+                            new ToolParam("userId", "string", true),
+                            new ToolParam("msgContent", "string", true)
+                    )
+            ),
+            new ToolDefinition("查询操作日志",
+                    "根据用户ID查询用户操作行为日志，返回多条日志记录",
+                    List.of(new ToolParam("userId", "string", true))
+            ),
+            new ToolDefinition("获取用户收货地址",
+                    "根据用户ID获取用户保存的收货地址信息",
+                    List.of(new ToolParam("userId", "string", true))
+            ),
+            new ToolDefinition("查询账户余额",
+                    "查询用户账户余额，返回余额浮点数",
+                    List.of(new ToolParam("userId", "string", true))
+            ),
+            new ToolDefinition("关闭用户会话",
+                    "关闭当前用户会话，标记会话结束，不需要返回业务数据",
+                    List.of(new ToolParam("userId", "string", true))
             )
     );
 
@@ -114,6 +150,15 @@ public class ToolRegistry {
                         "phone":17702794614
                     }
                     """;
+        } else if ("1002".equals(userId)) {
+            return """
+                    {
+                    "userId":"1002",
+                    "username":"lisi",
+                    "password":"Def789012",                    
+                    "phone":"13800138000"                    
+                    }
+                    """;
         } else {
             return "{\"msg\":\"找不到该用户\"}";
         }
@@ -133,16 +178,65 @@ public class ToolRegistry {
     public static final ObjectMapper MAPPER = new ObjectMapper();
 
     public static String executeMockTool(String toolName, String argsJson) {
-        JsonNode args = MAPPER.readTree(argsJson);
-        if ("查用户信息".equals(toolName)) {
-            String userId = args.get("userId").stringValue();
-            return mockQueryUser(userId);
-        } else if ("校验密码格式".equals(toolName)) {
-            String password = args.get("password").stringValue();
-            return mockCheckPasswordFormat(password);
-        } else {
-            return "未知工具" + toolName;
+        JsonNode args;
+        try {
+            args = MAPPER.readTree(argsJson);
+        } catch (JacksonException e) {
+            return "{\"error\":\"参数JSON解析失败\"}";
         }
+        return switch (toolName) {
+            case "查用户信息" -> {
+                String userIdText = args.get("userId").asString();
+                yield mockQueryUser(userIdText);
+            }
+            case "校验密码格式" -> {
+                String pwd = args.get("password").asString();
+                yield mockCheckPasswordFormat(pwd);
+            }
+            case "查询最近订单" -> {
+                String uid = args.get("userId").asString();
+                System.out.println("[mock查询最近订单]收到userId参数：" + uid);
+                yield """
+                        {"userId":"%s","orders":[{"orderId":"o001","goodsId":"g101","amount":299},{"orderId":"o002","goodsId":"g102","amount":599}]}
+                        """.formatted(uid);
+            }
+            case "计算订单总金额" -> {
+                //计算类工具：数据可以假，逻辑不能假——对传入订单真实求和
+                JsonNode orders = args.get("orderListJson");
+                if (orders.isString()) {
+                    //参数类型声明为 string，模型会把订单数组序列化成字符串传入，需二次解析
+                    orders = MAPPER.readTree(orders.asString());
+                }
+                double total = 0;
+                for (JsonNode order : orders) {
+                    total += order.get("amount").asDouble();
+                }
+                yield "{\"totalAmount\":" + total + "}";
+            }
+            case "查询库存" -> "{\"goodsId\":\"g101\",\"stock\":126}";
+            case "发送站内通知" -> "{\"success\":true,\"note\":\"通知已推送完成\"}";
+            case "查询操作日志" -> {
+                String uid = args.get("userId").asString();
+                System.out.println("[mock查询操作日志]收到userId参数：" + uid);
+                yield """
+                        {"userId":"%s","logs":[{"time":"2026‑10‑04 10:20","action":"login"},{"time":"2026‑10‑04 11:00","action":"order"}]}
+                        """.formatted(uid);
+            }
+            case "获取用户收货地址" -> {
+                String uid = args.get("userId").asString();
+                System.out.println("[mock获取用户收货地址]收到userId参数：" + uid);
+                yield """
+                        {"userId":"%s","address":"湖北省武汉市洪山区XX街道XX小区"}
+                        """.formatted(uid);
+            }
+            case "查询账户余额" -> {
+                String uid = args.get("userId").asString();
+                System.out.println("[mock查询账户余额]收到userId参数：" + uid);
+                yield "{\"userId\":\"%s\",\"balance\":1560.78}".formatted(uid);
+            }
+            case "关闭用户会话" -> "{\"sessionClosed\":true}";
+            default -> "{\"error\":\"未知工具：" + toolName + "\"}";
+        };
     }
 
     public static void main(String[] args) {

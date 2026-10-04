@@ -11,6 +11,7 @@ import org.springframework.web.client.RestClientResponseException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 @Component
 public class ChatRunner implements CommandLineRunner {
@@ -40,7 +41,7 @@ public class ChatRunner implements CommandLineRunner {
         }
 
         ArrayList<ChatMessage> messages = new ArrayList<>();
-        String userInput = "帮我查userId=1001的用户，校验他的密码格式。";
+        String userInput = "给用户 1001 发送短信验证码通知，凡工具返回 error，必须如实告知失败，不得声称成功";
         messages.add(ChatMessage.ofUser(userInput));
         int round = 0;
         final int MAX_ROUNDS = 10;
@@ -87,14 +88,14 @@ public class ChatRunner implements CommandLineRunner {
 
             List<ToolCall> toolCallList = assistantMsg.tool_calls();
             if (toolCallList != null && !toolCallList.isEmpty()) {
-                for (ToolCall Call : toolCallList) {
-                    String toolName = Call.function().name();
-                    String argsJson = Call.function().arguments();
+                for (ToolCall call : toolCallList) {
+                    String toolName = call.function().name();
+                    String argsJson = call.function().arguments();
                     System.out.println(">>> 执行工具：" + toolName);
                     System.out.println(">>> 工具原始参数：" + argsJson);
                     String toolResult;
                     try {
-                        toolResult = ToolRegistry.executeMockTool(Call.function().name(), argsJson);
+                        toolResult = ToolRegistry.executeMockTool(call.function().name(), argsJson);
                         consecutiveFail = 0;
 
                     } catch (Exception e) {
@@ -103,7 +104,7 @@ public class ChatRunner implements CommandLineRunner {
                         consecutiveFail++;
                     }
                     System.out.println(">>> 工具返回结果：" + toolResult);
-                    ChatMessage toolMsg = ChatMessage.tool(toolResult, Call.id());
+                    ChatMessage toolMsg = ChatMessage.tool(toolResult, call.id());
                     messages.add(toolMsg);
                     System.out.println(">>> 已把tool结果添加进messages列表");
                 }
