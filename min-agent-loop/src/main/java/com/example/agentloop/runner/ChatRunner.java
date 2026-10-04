@@ -40,10 +40,17 @@ public class ChatRunner implements CommandLineRunner {
         }
 
         ArrayList<ChatMessage> messages = new ArrayList<>();
-        String userInput = "帮我查userId=1001的用户，校验他的密码格式";
+        String userInput = "帮我查userId=1001的用户，校验他的密码格式。";
         messages.add(ChatMessage.ofUser(userInput));
         int round = 0;
+        final int MAX_ROUNDS = 10;
+        int consecutiveFail = 0;
+        final int MAX_CONSECUTIVE_FAIL = 3;
         while (true) {
+            if (round >= MAX_ROUNDS) {
+                System.out.println("【退出】已达到最大轮次" + MAX_ROUNDS + "，强制终止Agent循环");
+                break;
+            }
             round++;
             System.out.println("\n===== 第 " + round + " 轮 =====");
             ChatRequest body = new ChatRequest(
@@ -65,14 +72,14 @@ public class ChatRunner implements CommandLineRunner {
                         .retrieve()
                         .body(ChatResponse.class);
             } catch (RestClientResponseException e) {
-                System.out.println("HTTP " + e.getStatusCode() + ": " + e.getResponseBodyAsString());
+                System.out.println("【退出‑接口异常】HTTP错误：" + e.getResponseBodyAsString());
                 break;
             } catch (Exception e) {
-                System.out.println("请求失败：" + e.getMessage());
+                System.out.println("【退出‑接口异常】请求失败：" + e.getMessage());
                 break;
             }
             if (response == null || response.choices() == null || response.choices().isEmpty()) {
-                System.out.println("模型返回空响应");
+                System.out.println("【退出】模型返回空响应");
                 break;
             }
             ChatMessage assistantMsg = response.choices().get(0).message();
@@ -88,15 +95,24 @@ public class ChatRunner implements CommandLineRunner {
                     String toolResult;
                     try {
                         toolResult = ToolRegistry.executeMockTool(Call.function().name(), argsJson);
+                        consecutiveFail = 0;
+
                     } catch (Exception e) {
                         toolResult = "工具调用异常：" + e.getMessage();
+                        System.out.println("【工具执行失败】" + toolName + "，错误信息：" + e.getMessage());
+                        consecutiveFail++;
                     }
                     System.out.println(">>> 工具返回结果：" + toolResult);
                     ChatMessage toolMsg = ChatMessage.tool(toolResult, Call.id());
                     messages.add(toolMsg);
                     System.out.println(">>> 已把tool结果添加进messages列表");
                 }
+                if (consecutiveFail >= MAX_CONSECUTIVE_FAIL) {
+                    System.out.println("【退出‑工具执行失败】连续" + consecutiveFail + "次工具执行失败，强制终止Agent循环");
+                    break;
+                }
             } else {
+                System.out.println("【退出‑正常完成】模型不再调用工具，任务结束");
                 System.out.println("AI最终回答：" + assistantMsg.content());
                 break;
             }
