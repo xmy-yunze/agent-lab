@@ -1,5 +1,5 @@
 import numpy as np
-from rag import split_chunks, embed, retrieve
+from python.frist.rag import split_chunks, embed, retrieve
     
 chunks=split_chunks("学习计划.md")
 mat=np.array(embed(chunks))

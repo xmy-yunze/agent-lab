@@ -1,5 +1,5 @@
 import numpy as np
-from rag import split_chunks, embed, retrieve
+from python.frist.rag import split_chunks, embed, retrieve
 import os,requests,sys
 
 CHAT_URL="https://open.bigmodel.cn/api/paas/v4/chat/completions"
