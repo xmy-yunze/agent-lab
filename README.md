@@ -26,7 +26,7 @@ Agent 岗位实际分三层。模型/算法层要 ML 背景，跟我们无关；
 
 ## 当前阶段
 
-**2026-09-20 起 · 第一周已完成（09-24 收工）· 第二周进行中**
+**2026-09-20 起 · 第一周已完成（09-24 收工）· 第二周进行中（B 线 Day 1-4 产出物一已完工，A 线 Day 5 起）**
 
 - Spring Boot validation 的学习**已暂停**，精力转到 Agent 学习。
 - **第一周（热身 + RAG 认知线）全程 Python**，逐日产出见 [`第一周-执行表.md`](./第一周-执行表.md)；跨产出物的笔记在 [`notes/rag.md`](./notes/rag.md)。
@@ -55,7 +55,7 @@ Agent 岗位实际分三层。模型/算法层要 ML 背景，跟我们无关；
 | 2 | B | 让它自己决定调哪个工具（2 个工具 + `while` 循环） | ✅ | `min-agent-loop/`（Agent 循环跑通，含轮次日志与 1002 反证） |
 | 3 | B | 让它知道什么时候该停（三层终止条件） | ✅ | `min-agent-loop/`（三层终止 + 故意弄坏双向验证） |
 | 4 | B | 工具加到 10 个 + 产出物一验收 | ✅ | `min-agent-loop/题目.md`（四题答案 + 三条验收打勾） |
-| 5 | A | 先把 PyTorch 跑起来 | ⬜ | — |
+| 5 | A | 先把 PyTorch 跑起来 | ✅ | `python/second/my_train.py`（训练循环跑通，loss 28.9→0.26 收敛） |
 | 6 | A | 手撕一个神经网络（前向 + 反向传播） | ⬜ | — |
 | 7 | A | 用 Excel 手算注意力（Q/K/V） | ⬜ | — |
 
@@ -99,7 +99,7 @@ Agent 岗位实际分三层。模型/算法层要 ML 背景，跟我们无关；
 
 ## 怎么跑起来
 
-第一周的脚本都在 `python/`，直接依赖只有 4 个（`requests` / `fastapi` / `uvicorn` / `numpy`），另需一个模型 API Key。
+第一周的脚本都在 `python/first/`，第二周的脚本在 `python/second/`，直接依赖有 5 个（`requests` / `fastapi` / `uvicorn` / `numpy` / `torch`），另需一个模型 API Key。
 
 ```bash
 python3 -m venv .venv && source .venv/bin/activate
@@ -113,14 +113,16 @@ export ZHIPU_API_KEY="你自己的 Key"
 
 | 脚本 | 怎么跑（都在项目根目录下） | 看到什么 |
 |---|---|---|
-| `python/day1.py` | `python3 python/day1.py` | 终端打印出模型的一句话 |
-| `python/day2.py` | `cd python && uvicorn day2:app --reload` | 浏览器开 `127.0.0.1:8000/xmy/?message=你好` 能跟模型对话 |
-| `python/day3.py` | `python3 python/day3.py` | 把 `学习计划.md` 切成 10 段，打印每段长度和开头 |
-| `python/day4.py` | `python3 python/day4.py` | 换一个问题，按相关度**从高到低**打印最相关的 3 段及分数（检索逻辑已抽到 `rag.py`） |
-| `python/rag.py` | （不单独跑，被 day4 / day5 共用） | 检索这条线上的三件事：`split_chunks`（切分，**带标题路径 + 认代码围栏**）/ `embed`（向量化）/ `retrieve`（算分排序取 top-k） |
-| `python/day5.py` | `python3 python/day5.py "你的问题"` | **完整 RAG**：检索 top-3 → 拼进提示（带 `[1][2][3]` 编号）→ 让模型只依据资料回答并标注引用编号（问题从命令行参数进，缺省用 `KV Cache 是什么？`） |
-| `python/day6.py` | `python3 python/day6.py` | 五个**切分边界** case（标准 `##/###`、全是 `#`、夹 `####`、完全没标题、**代码块里的假标题**）各切出几段 —— 用来暴露正则和围栏识别的边界 |
-| `python/day6_trace.py` | `python3 python/day6_trace.py` | **标题栈观察台**：逐行打印「行号 / 内容 / 判定 / 栈」看标题路径怎么生成；并给出三份文档修复前后的段数、以及「B 线」关键词覆盖的段数对照 |
+| `python/first/day1.py` | `python3 python/first/day1.py` | 终端打印出模型的一句话 |
+| `python/first/day2.py` | `cd python/first && uvicorn day2:app --reload` | 浏览器开 `127.0.0.1:8000/xmy/?message=你好` 能跟模型对话 |
+| `python/first/day3.py` | `python3 python/first/day3.py` | 把 `学习计划.md` 切成 10 段，打印每段长度和开头 |
+| `python/first/day4.py` | `python3 python/first/day4.py` | 换一个问题，按相关度**从高到低**打印最相关的 3 段及分数（检索逻辑已抽到 `rag.py`） |
+| `python/first/rag.py` | （不单独跑，被 day4 / day5 共用） | 检索这条线上的三件事：`split_chunks`（切分，**带标题路径 + 认代码围栏**）/ `embed`（向量化）/ `retrieve`（算分排序取 top-k） |
+| `python/first/day5.py` | `python3 python/first/day5.py "你的问题"` | **完整 RAG**：检索 top-3 → 拼进提示（带 `[1][2][3]` 编号）→ 让模型只依据资料回答并标注引用编号（问题从命令行参数进，缺省用 `KV Cache 是什么？`） |
+| `python/first/day6.py` | `python3 python/first/day6.py` | 五个**切分边界** case（标准 `##/###`、全是 `#`、夹 `####`、完全没标题、**代码块里的假标题**）各切出几段 —— 用来暴露正则和围栏识别的边界 |
+| `python/first/day6_trace.py` | `python3 python/first/day6_trace.py` | **标题栈观察台**：逐行打印「行号 / 内容 / 判定 / 栈」看标题路径怎么生成；并给出三份文档修复前后的段数、以及「B 线」关键词覆盖的段数对照 |
+| `python/second/my_train.py` | `python3 python/second/my_train.py` | **A 线第一个训练循环**：手写四步（前向 → 算损失 → 反向 → 更新），看 loss 28.9 → 0.26、参数逼近真值 `w≈3, b≈5`。改坏 lr 看炸：`0.002 → 0.01` 会跑到 nan |
+| `python/second/train_demo.py` | `python3 python/second/train_demo.py` | Day 5 对照例子（华氏↔摄氏换算），跟 `my_train.py` 业务域不同 |
 
 ## 进度记录
 
