@@ -26,7 +26,7 @@ Agent 岗位实际分三层。模型/算法层要 ML 背景，跟我们无关；
 
 ## 当前阶段
 
-**2026-09-20 起 · 第一周已完成（09-24 收工）· 第二周进行中（B 线 Day 1-4 产出物一已完工，A 线 Day 5 起）**
+**2026-09-20 起 · 第一周已完成（09-24 收工）· 第二周进行中（B 线 Day 1-4 产出物一已完工，A 线 Day 6 已验收，Day 7 未开始）**
 
 - Spring Boot validation 的学习**已暂停**，精力转到 Agent 学习。
 - **第一周（热身 + RAG 认知线）全程 Python**，逐日产出见 [`第一周-执行表.md`](./第一周-执行表.md)；跨产出物的笔记在 [`notes/rag.md`](./notes/rag.md)。
@@ -37,12 +37,12 @@ Agent 岗位实际分三层。模型/算法层要 ML 背景，跟我们无关；
 
 | Day | 做什么 | 状态 | 产出 |
 |---|---|---|---|
-| 1 | 让模型开口说话 | ✅ | `python/day1.py` |
-| 2 | 把它变成一个服务 | ✅ | `python/day2.py` |
-| 3 | 给它一份自己的资料（文档切分） | ✅ | `python/day3.py` |
-| 4 | 把意思变成数字（embedding + numpy 手算相似度） | ✅ | `python/day4.py` |
-| 5 | 串成一个完整的 RAG | ✅ | `python/day5.py` + `python/rag.py` |
-| 6 | 故意把它弄坏（本周最值钱的一天） | ✅ | `python/day6.py` + `python/day6_trace.py` |
+| 1 | 让模型开口说话 | ✅ | `python/first/day1.py` |
+| 2 | 把它变成一个服务 | ✅ | `python/first/day2.py` |
+| 3 | 给它一份自己的资料（文档切分） | ✅ | `python/first/day3.py` |
+| 4 | 把意思变成数字（embedding + numpy 手算相似度） | ✅ | `python/first/day4.py` |
+| 5 | 串成一个完整的 RAG | ✅ | `python/first/day5.py` + `python/first/rag.py` |
+| 6 | 故意把它弄坏（本周最值钱的一天） | ✅ | `python/first/day6.py` + `python/first/day6_trace.py` |
 | 7 | 回头看，写下来（一页纸讲清 RAG） | ✅ | `notes/rag.md` |
 
 每天**卡在哪、花了多久、以及当天最值钱的认知**，都记在 [`第一周-执行表.md`](./第一周-执行表.md) 的「打卡区」里 —— 那里比这张表有信息量。
@@ -56,7 +56,7 @@ Agent 岗位实际分三层。模型/算法层要 ML 背景，跟我们无关；
 | 3 | B | 让它知道什么时候该停（三层终止条件） | ✅ | `min-agent-loop/`（三层终止 + 故意弄坏双向验证） |
 | 4 | B | 工具加到 10 个 + 产出物一验收 | ✅ | `min-agent-loop/题目.md`（四题答案 + 三条验收打勾） |
 | 5 | A | 先把 PyTorch 跑起来 | ✅ | `python/second/my_train.py`（训练循环跑通，loss 28.9→0.26 收敛） |
-| 6 | A | 手撕一个神经网络（前向 + 反向传播） | ⬜ | — |
+| 6 | A | 手撕一个神经网络（前向 + 反向传播） | ✅ | `python/second/Backward.py` + `Backward2.py`（梯度验证；两层网络 Loss 9→1.192464；最终理解验收 3/3） |
 | 7 | A | 用 Excel 手算注意力（Q/K/V） | ⬜ | — |
 
 ## 学习地图
@@ -121,8 +121,10 @@ export ZHIPU_API_KEY="你自己的 Key"
 | `python/first/day5.py` | `python3 python/first/day5.py "你的问题"` | **完整 RAG**：检索 top-3 → 拼进提示（带 `[1][2][3]` 编号）→ 让模型只依据资料回答并标注引用编号（问题从命令行参数进，缺省用 `KV Cache 是什么？`） |
 | `python/first/day6.py` | `python3 python/first/day6.py` | 五个**切分边界** case（标准 `##/###`、全是 `#`、夹 `####`、完全没标题、**代码块里的假标题**）各切出几段 —— 用来暴露正则和围栏识别的边界 |
 | `python/first/day6_trace.py` | `python3 python/first/day6_trace.py` | **标题栈观察台**：逐行打印「行号 / 内容 / 判定 / 栈」看标题路径怎么生成；并给出三份文档修复前后的段数、以及「B 线」关键词覆盖的段数对照 |
-| `python/second/my_train.py` | `python3 python/second/my_train.py` | **A 线第一个训练循环**：手写四步（前向 → 算损失 → 反向 → 更新），看 loss 28.9 → 0.26、参数逼近真值 `w≈3, b≈5`。改坏 lr 看炸：`0.002 → 0.01` 会跑到 nan |
+| `python/second/my_train.py` | `python3 python/second/my_train.py` | **A 线第一个训练循环**：手写四步（前向 → 算损失 → 反向 → 更新），看 loss 28.9 → 0.26、参数逼近真值 `w≈3, b≈5`。学习率发散实验使用 `train_demo.py`，其结果不能直接套用到不同数据范围的 `my_train.py` |
 | `python/second/train_demo.py` | `python3 python/second/train_demo.py` | Day 5 对照例子（华氏↔摄氏换算），跟 `my_train.py` 业务域不同 |
+| `python/second/Backward.py` | `python3 python/second/Backward.py` | 单层线性模型：Autograd 梯度 `dw=-8, db=-4`，一次更新后 Loss 4→0 |
+| `python/second/Backward2.py` | `python3 python/second/Backward2.py` | 两层线性网络：手写 Backward，四个梯度为 -24 / -12 / -18 / -6，一次更新后 Loss 9→约 1.192464 |
 
 ## 进度记录
 
