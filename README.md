@@ -26,11 +26,11 @@ Agent 岗位实际分三层。模型/算法层要 ML 背景，跟我们无关；
 
 ## 当前阶段
 
-**2026-09-20 起 · 第一周已完成（09-24 收工）· 第二周进行中（B 线 Day 1-4 产出物一已完工，A 线 Day 6 已验收，Day 7 未开始）**
+**2026-09-20 起 · 第一周已完成（09-24 收工）· 第二周主要任务已完成（10-10 收口：B 线 Day 1-4、A 线 Day 5-7 均已验收）**
 
 - Spring Boot validation 的学习**已暂停**，精力转到 Agent 学习。
 - **第一周（热身 + RAG 认知线）全程 Python**，逐日产出见 [`第一周-执行表.md`](./第一周-执行表.md)；跨产出物的笔记在 [`notes/rag.md`](./notes/rag.md)。
-- **第二周起切回 Java**：正在走 **[`第二周-执行表.md`](./第二周-执行表.md)** —— B 线 4 天开工产出物一 `min-agent-loop`（手写 Agent 循环，**不引 Spring AI / LangChain4j**）+ A 线 3 天（PyTorch → 手撕网络 → Excel 手算注意力）。
+- **第二周起切回 Java**：已完成 **[`第二周-执行表.md`](./第二周-执行表.md)** 的主要任务 —— B 线 4 天开工产出物一 `min-agent-loop`（手写 Agent 循环，**不引 Spring AI / LangChain4j**）+ A 线 3 天（PyTorch → 手撕网络 → Excel 手算注意力）。
 - 正式产出物的技术栈按 **[`CODEBUDDY.md`](./CODEBUDDY.md)** 走：**Java 17 + Spring Boot 4.0.7 + Gradle**。
 
 ### 第一周进度（RAG 认知线）
@@ -57,7 +57,7 @@ Agent 岗位实际分三层。模型/算法层要 ML 背景，跟我们无关；
 | 4 | B | 工具加到 10 个 + 产出物一验收 | ✅ | `min-agent-loop/题目.md`（四题答案 + 三条验收打勾） |
 | 5 | A | 先把 PyTorch 跑起来 | ✅ | `python/second/my_train.py`（训练循环跑通，loss 28.9→0.26 收敛） |
 | 6 | A | 手撕一个神经网络（前向 + 反向传播） | ✅ | `python/second/Backward.py` + `Backward2.py`（梯度验证；两层网络 Loss 9→1.192464；最终理解验收 3/3） |
-| 7 | A | 用 Excel 手算注意力（Q/K/V） | ⬜ | — |
+| 7 | A | 用 Excel 手算注意力（Q/K/V） | ✅ | [`notes/token.xlsx`](notes/token.xlsx)（完整 Self-Attention 单元格公式计算，验收通过） |
 
 ## 学习地图
 
@@ -131,4 +131,4 @@ export ZHIPU_API_KEY="你自己的 Key"
 - **第一周逐日进度** → [`第一周-执行表.md`](./第一周-执行表.md) 的「打卡区」：每天卡在哪、花了多久、以及当天最值钱的认知。
 - **第二周逐日进度** → [`第二周-执行表.md`](./第二周-执行表.md)：Java 手写 Agent 循环（B 线 4 天）+ A 线 Transformer 地基（3 天）。
 - **三个正式产出物** → 上面「学习地图」表的「状态」列，开一个改一个。
-- 跨产出物的通用笔记放 `notes/`（当前一篇：[`notes/rag.md`](./notes/rag.md) —— Day 7 的「一页纸讲清 RAG」）。
+- 跨产出物的通用笔记与学习表格放 `notes/`：[`notes/rag.md`](./notes/rag.md)（第一周 RAG 复盘）、[`notes/token.xlsx`](./notes/token.xlsx)（第二周 Self-Attention 手算）。
