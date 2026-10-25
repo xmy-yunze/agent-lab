@@ -1,0 +1,12 @@
+{"id":"case-01","question":"总共计划学习多长时间？","expected_answer":"约16周（4个月）。","evidence":"约16周（4个月），每天3-4小时。","answerable":true,"split":"dev"}
+{"id":"case-02","question":"学习计划中，理解模型原理和进行工程开发分别对应什么方向？各占多少比重？","expected_answer":"A线为算法模型线，认知级，占30%；B线为开发工程线，实战级，占70%。","evidence":"A线·算法模型线（认知级·30%）；B线·开发工程线（实战级·70%）。","answerable":true,"split":"dev"}
+{"id":"case-03","question":"B线有哪些阶段及其时长？","expected_answer":"B1最小可跑1周；B2 Agent循环与工具调用3周；B3检索与记忆4周；B4生产化Harness 4周；B5评测与可观测2周。","evidence":"B1·最小可跑（1周）；B2·Agent循环与工具调用（3周）；B3·检索与记忆（4周）；B4·生产化Harness（4周）；B5·评测与可观测（2周）。","answerable":true,"split":"dev"}
+{"id":"case-04","question":"如果后续求职投递AI Agent工程岗，简历上该用什么标准判断这4个月产出的项目能不能过初筛？","expected_answer":"学习计划没有提供足以判断招聘初筛结果的具体标准，无法确定。","evidence":"","answerable":false,"split":"dev"}
+{"id":"case-05","question":"本学习计划里A线算法模型线分配的学习占比是多少？","expected_answer":"A线分配30%的学习精力，定位为认知级。","evidence":"A线·算法模型线，配额30%，认知级：看得懂、能对话、能判断边界。","answerable":true,"split":"dev"}
+{"id":"case-06","question":"这份双线学习方案，并不是要把算法岗和开发岗两条路线都练到可以直接入职，对吗？","expected_answer":"对。计划采用一深一浅策略，B线开发工程为实战级，占70%；A线模型原理为认知级，占30%。这属于AI/Agent内部的学习分工。","evidence":"「两条都要学」≠「两条都要练到能就业」；一深一浅：B线70%实战级，A线30%认知级。","answerable":true,"split":"dev"}
+{"id":"case-07","question":"在本计划中，A线Transformer相关内容、KV Cache概念分别归属哪个学习阶段，以及KV Cache对应后端里什么熟悉概念？","expected_answer":"Transformer属于A2模型核心机制；KV Cache属于A4推理与部署；KV Cache对应后端缓存设计，包括空间换时间、命中率和失效策略。","evidence":"A2·模型核心机制包含Transformer；A4·推理与部署包含KV Cache；KV Cache对应缓存设计：空间换时间、命中率、失效策略。","answerable":true,"split":"dev"}
+{"id":"case-08","question":"本学习计划中，Advanced RAG实验设定的召回Top-K固定取值是多少？","expected_answer":"学习计划没有记录Advanced RAG实验的召回Top-K固定取值，无法确定。","evidence":"","answerable":false,"split":"dev"}
+{"id":"case-09","question":"AgentGuide在这份计划里定位是什么，使用上有一条最重要的禁止做法是什么？","expected_answer":"AgentGuide是地图，不是教材；不要通读。","evidence":"它是地图，不是教材。不要通读。","answerable":true,"split":"holdout"}
+{"id":"case-10","question":"按照这个双线学习方案，我优先深耕AI Agent系统落地搭建，不用在模型创新、论文实验上投入同等精力，这个思路符合计划要求吗？","expected_answer":"符合。AI/Agent内部以B线工程实践为主，占70%；A线模型原理为认知级，占30%，不以论文级创新实验为学习主线。","evidence":"一深一浅：B线70%实战级，A线30%认知级；算法工程师线以算法创新、论文研究为主，开发工程师线以系统搭建、业务落地为主。","answerable":true,"split":"holdout"}
+{"id":"case-11","question":"在计划的排期表里，A线A3微调对齐、A4推理部署分别安排在哪些周次；A线的总结阶段放在哪几周？","expected_answer":"第7-9周安排A3微调与对齐；第10-11周安排A3收尾与A4推理部署；第12-15周安排A线总结。","evidence":"排期表：7-9周A3微调与对齐；10-11周A3收尾+A4推理与部署；12-15周A线总结。","answerable":true,"split":"holdout"}
+{"id":"case-12","question":"这份学习计划中，B4生产化Harness模块要求链路追踪采用什么开源组件？","expected_answer":"学习计划没有指定链路追踪使用的开源组件，无法确定。","evidence":"","answerable":false,"split":"holdout"}

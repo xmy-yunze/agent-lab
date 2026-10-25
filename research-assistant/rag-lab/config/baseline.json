@@ -1,0 +1,11 @@
+
+{
+  "provider": "siliconflow",
+  "corpus_path": "research-assistant/rag-lab/corpus/学习计划.md",
+  "embedding_model": "BAAI/bge-m3",
+  "chat_model": "zai-org/GLM-5.3-Flash",
+  "top_k": 3,
+  "chunk_rule": "Markdown标题切分，MIN_SPLIT_LEVEL=2，保留代码围栏",
+  "prompt_version": "day5-original",
+  "corpus_hash": "aae1b1900bfe3813d2e8d1c7b45fc6cbf424e5a27db6cbae265018a58f6dc0e7"
+}
