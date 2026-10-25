@@ -1,136 +1,87 @@
 # agent-lab
 
-AI 与 Agent 的学习载体。用「出题 - 解题」的方式，把后端能力延伸到 AI 工程。
+Java 后端 + AI / Agent 工程双线发展的学习载体。用「出题 - 解题」积累可运行、可解释的成果。
 
 ## 为什么走这条路
 
-Agent 岗位实际分三层。模型/算法层要 ML 背景，跟我们无关；应用/编排层门槛低、容易被替代；**中间那层 Harness（运行时、上下文管理、工具协议、容错、可观测性、成本控制）就是后端工程**，只是换了名字。
+Java 后端是已有基础，AI / Agent 是可以独立发展的技术路线。两条路线并行积累，未来根据能力、兴趣和就业机会选择方向。后端经验能帮助理解 Agent 工程中的运行时、上下文管理、工具协议和容错，但不限定使用的语言或职业方向。
 
-概念其实一一对应：
+Java 继续发展后端能力，Python 逐步发展独立构建 AI 应用与 Agent 系统的能力。AI / Agent 内部的 **A 模型原理线 + B 开发工程线**，与 Java / AI 两条职业发展路线区分；完整路线见 [`学习计划.md`](./学习计划.md)。
 
-| Agent 里的叫法 | 后端早就有的东西 |
-|---|---|
-| Agent 循环 / 工具调用 | 状态机、工作流引擎 |
-| 上下文工程 / 上下文压缩 | 会话管理、缓存治理 |
-| Memory 短期 / 长期记忆 | 数据库、向量检索 |
-| Tool Schema / 函数调用 | 接口契约、API 网关 |
-| MCP / A2A 协议 | RPC 协议、服务发现 |
-| 权限分级 / 沙箱隔离 | 鉴权、多租户隔离 |
-| 重试 / 成本护栏 | 熔断限流、配额幂等 |
-| Trace / Replay 回放 | 链路追踪、日志回放 |
+## 当前学习进度 · 第三周
 
-所以不需要转行，是把已有的东西接上去。
+**Advanced RAG + Agent 工程实践**：在 Python 基础 RAG 上做诊断、方案选择与对照验证，Day 6 对照已有 Java Agent Loop。下一步：**Day 2 · Query Transformation**。
 
-> 📄 完整学习计划见 **[`学习计划.md`](./学习计划.md)** —— 双线并行：**算法模型线（认知级 · 30%）+ 开发工程线（实战级 · 70%）**
-> ✅ 了解级自检问题 + 岗位覆盖清单见 **[`了解清单.md`](./了解清单.md)**
-
-## 当前阶段
-
-- **第三周 Day 1 已完成**：验收 37/40（92.5%）；8 dev Top-3 检索、3 道生成测试；人工初步完整证据覆盖率 5/6=83.3%。详见 [`第三周-执行表.md`](./第三周-执行表.md) 与 [诊断报告](./research-assistant/rag-lab/reports/day1-diagnosis.md)。Day 2 尚未开始。
-
-**2026-09-20 起 · 第一周已完成（09-24 收工）· 第二周主要任务已完成（10-10 收口：B 线 Day 1-4、A 线 Day 5-7 均已验收）**
-
-- Spring Boot validation 的学习**已暂停**，精力转到 Agent 学习。
-- **第一周（热身 + RAG 认知线）全程 Python**，逐日产出见 [`第一周-执行表.md`](./第一周-执行表.md)；跨产出物的笔记在 [`notes/rag.md`](./notes/rag.md)。
-- **第二周起切回 Java**：已完成 **[`第二周-执行表.md`](./第二周-执行表.md)** 的主要任务 —— B 线 4 天开工产出物一 `min-agent-loop`（手写 Agent 循环，**不引 Spring AI / LangChain4j**）+ A 线 3 天（PyTorch → 手撕网络 → Excel 手算注意力）。
-- 正式产出物的技术栈按 **[`CODEBUDDY.md`](./CODEBUDDY.md)** 走：**Java 17 + Spring Boot 4.0.7 + Gradle**。
-
-### 第一周进度（RAG 认知线）
-
-| Day | 做什么 | 状态 | 产出 |
+| 天数 | 学习内容 | 状态 | 验收结果 |
 |---|---|---|---|
-| 1 | 让模型开口说话 | ✅ | `python/first/day1.py` |
-| 2 | 把它变成一个服务 | ✅ | `python/first/day2.py` |
-| 3 | 给它一份自己的资料（文档切分） | ✅ | `python/first/day3.py` |
-| 4 | 把意思变成数字（embedding + numpy 手算相似度） | ✅ | `python/first/day4.py` |
-| 5 | 串成一个完整的 RAG | ✅ | `python/first/day5.py` + `python/first/rag.py` |
-| 6 | 故意把它弄坏（本周最值钱的一天） | ✅ | `python/first/day6.py` + `python/first/day6_trace.py` |
-| 7 | 回头看，写下来（一页纸讲清 RAG） | ✅ | `notes/rag.md` |
+| Day 1 | RAG 故障诊断 | ✅ 已完成 | **37/40（92.5%）**；8 dev Top-3、3 道生成测试；人工初步完整证据覆盖率 **5/6=83.3%** |
+| Day 2 | Query Transformation | ⬜ 未开始 | 待验收 |
+| Day 3 | BM25 + Hybrid Search | ⬜ 未开始 | 待验收 |
+| Day 4 | Reranking | ⬜ 未开始 | 待验收 |
+| Day 5 | RAG Evaluation | ⬜ 未开始 | 待验收 |
+| Day 6 | ReAct 与已有 Agent 工程 | ⬜ 未开始 | 待验收 |
+| Day 7 | 独立解决陌生问题 | ⬜ 未开始 | 待验收 |
 
-每天**卡在哪、花了多久、以及当天最值钱的认知**，都记在 [`第一周-执行表.md`](./第一周-执行表.md) 的「打卡区」里 —— 那里比这张表有信息量。
+任务与逐日打卡以 [`第三周-执行表.md`](./第三周-执行表.md) 为准。Day 1 的 case-03 检索证据不完整，case-04 正确拒答；详见 [Day 1 诊断报告](./research-assistant/rag-lab/reports/day1-diagnosis.md)。完整生成 Prompt / 原始回答日志尚未落盘；上述覆盖率为人工初步评估，不等同于正式宏平均 Recall@3，也不代表已有优化提升。
 
-### 第二周进度（Java 手写 Agent 循环 + A 线 Transformer 地基）
+### 历史摘要
 
-| Day | 线 | 做什么 | 状态 | 产出 |
-|---|---|---|---|---|
-| 1 | B | 让 Java 说得上话（工程 + 手写 HTTP + Tool 结构） | ✅ | `min-agent-loop/`（`ChatRunner` + `ToolRegistry`） |
-| 2 | B | 让它自己决定调哪个工具（2 个工具 + `while` 循环） | ✅ | `min-agent-loop/`（Agent 循环跑通，含轮次日志与 1002 反证） |
-| 3 | B | 让它知道什么时候该停（三层终止条件） | ✅ | `min-agent-loop/`（三层终止 + 故意弄坏双向验证） |
-| 4 | B | 工具加到 10 个 + 产出物一验收 | ✅ | `min-agent-loop/题目.md`（四题答案 + 三条验收打勾） |
-| 5 | A | 先把 PyTorch 跑起来 | ✅ | `python/second/my_train.py`（训练循环跑通，loss 28.9→0.26 收敛） |
-| 6 | A | 手撕一个神经网络（前向 + 反向传播） | ✅ | `python/second/Backward.py` + `Backward2.py`（梯度验证；两层网络 Loss 9→1.192464；最终理解验收 3/3） |
-| 7 | A | 用 Excel 手算注意力（Q/K/V） | ✅ | [`notes/token.xlsx`](notes/token.xlsx)（完整 Self-Attention 单元格公式计算，验收通过） |
+- **第一周已完成**：Python 基础调用、RAG 链路与故障复盘 → [`第一周-执行表.md`](./第一周-执行表.md)。
+- **第二周主要任务已完成并验收**：Java 手写 Agent 循环（B 线 Day 1–4）+ PyTorch、反向传播、Excel 手算 Self-Attention（A 线 Day 5–7）→ [`第二周-执行表.md`](./第二周-执行表.md)。
 
-## 学习地图
+Multi-Head Attention / Transformer Block 留待后续，尚未开始；Spring Boot validation 学习已暂停。
 
-**只做下面这三件事，做完再说别的。**
+## 实践项目
 
-| 顺序 | 产出物 | 要搞明白的核心问题 | 状态 |
-|---|---|---|---|
-| 1 | `min-agent-loop/` | Agent 循环到底长什么样？它凭什么能自己决定下一步 | **✅ 已完工**（第二周 Day 1-4） |
-| 2 | `research-assistant/` | 工具调用 + 检索 + 多轮记忆怎么装到一起 | 未开始 |
-| 3 | `harness-demo/` | 怎么让它跑得稳、跑得便宜、出错了能查 | 未开始 |
+| 产出物 | 核心问题 | 进展 |
+|---|---|---|
+| [`min-agent-loop/`](./min-agent-loop/题目.md) | Agent 循环如何决定下一步、执行工具并终止 | 已完成并验收；保留 Java 手写实现，不引 Agent 框架 |
+| [`research-assistant/`](./research-assistant/题目.md) | 工具调用、检索与多轮记忆如何组合 | `rag-lab/` 检索实验进行中；完整项目要求尚未完成 |
+| [`harness-demo/`](./harness-demo/题目.md) | 如何控制稳定性、成本并追查错误 | 未开始 |
 
-每个目录里有 `题目.md`，写清了目标、要求和验收标准。按顺序来，别跳。
-
-## 文档地图
-
-**不同时候看不同的东西，别乱翻：**
-
-| 你现在的状态 | 打开哪个 |
-|---|---|
-| 想知道整体在干什么、进度到哪 | 本文件 `README.md` |
-| **下一次从哪里开始** | [`第三周-执行表.md`](./第三周-执行表.md) Day 2（尚未开始）；第二周验收记录保留 |
-| 忘了为什么这么学、A/B 线怎么分、AgentGuide 怎么用 | [`学习计划.md`](./学习计划.md) |
-| 面试前过一遍广度自检 | [`了解清单.md`](./了解清单.md) |
-| 复盘某一天当时怎么做的、看到哪些数据 | 那一周执行表里的**打卡区** |
-| 提交前的规矩、和我协作的方式 | [`CODEBUDDY.md`](./CODEBUDDY.md) |
-
-**已完结 / 还没到的，别主动打开**（它们不是"乱"，只是不属于你现在这一步）：
-
-- [`第一周-执行表.md`](./第一周-执行表.md) —— **已完结（09-20 ~ 09-24），存档**。日常找东西不看它；只有复盘第一周时才翻它的打卡区。
-- `harness-demo/题目.md`、`research-assistant/题目.md` —— 产出物二的题，还没到。
-
-## 怎么用这个文件夹
-
-1. **从本目录打开会话**（不是桌面，不是别的文件夹）
-2. 一次只推进一个产出物
-3. 学完先把成果落盘，再关窗口
-
-第 3 条是关键。窗口可以随便新开，但产出必须先落地，否则这个文件夹也会变成垃圾堆。
+每个项目的 `题目.md` 保留目标与验收标准；第三周 RAG 实验不等同于完整 research-assistant 项目验收。
 
 ## 怎么跑起来
 
-第一周的脚本都在 `python/first/`，第二周的脚本在 `python/second/`，直接依赖有 5 个（`requests` / `fastapi` / `uvicorn` / `numpy` / `torch`），另需一个模型 API Key。
+在项目根目录准备 Python 环境，依赖以 `requirements.txt` 为准：
 
 ```bash
-python3 -m venv .venv && source .venv/bin/activate
-
-# 国内建议加镜像加速：-i https://pypi.tuna.tsinghua.edu.cn/simple
+python3 -m venv .venv
+source .venv/bin/activate
 python3 -m pip install -r requirements.txt
-
-# 模型接口走智谱（open.bigmodel.cn）。Key 只放环境变量，不进代码、不进 Git。
-export ZHIPU_API_KEY="你自己的 Key"
 ```
 
-| 脚本 | 怎么跑（都在项目根目录下） | 看到什么 |
-|---|---|---|
-| `python/first/day1.py` | `python3 python/first/day1.py` | 终端打印出模型的一句话 |
-| `python/first/day2.py` | `cd python/first && uvicorn day2:app --reload` | 浏览器开 `127.0.0.1:8000/xmy/?message=你好` 能跟模型对话 |
-| `python/first/day3.py` | `python3 python/first/day3.py` | 把 `学习计划.md` 切成 10 段，打印每段长度和开头 |
-| `python/first/day4.py` | `python3 python/first/day4.py` | 换一个问题，按相关度**从高到低**打印最相关的 3 段及分数（检索逻辑已抽到 `rag.py`） |
-| `python/first/rag.py` | （不单独跑，被 day4 / day5 共用） | 检索这条线上的三件事：`split_chunks`（切分，**带标题路径 + 认代码围栏**）/ `embed`（向量化）/ `retrieve`（算分排序取 top-k） |
-| `python/first/day5.py` | `python3 python/first/day5.py "你的问题"` | **完整 RAG**：检索 top-3 → 拼进提示（带 `[1][2][3]` 编号）→ 让模型只依据资料回答并标注引用编号（问题从命令行参数进，缺省用 `KV Cache 是什么？`） |
-| `python/first/day6.py` | `python3 python/first/day6.py` | 五个**切分边界** case（标准 `##/###`、全是 `#`、夹 `####`、完全没标题、**代码块里的假标题**）各切出几段 —— 用来暴露正则和围栏识别的边界 |
-| `python/first/day6_trace.py` | `python3 python/first/day6_trace.py` | **标题栈观察台**：逐行打印「行号 / 内容 / 判定 / 栈」看标题路径怎么生成；并给出三份文档修复前后的段数、以及「B 线」关键词覆盖的段数对照 |
-| `python/second/my_train.py` | `python3 python/second/my_train.py` | **A 线第一个训练循环**：手写四步（前向 → 算损失 → 反向 → 更新），看 loss 28.9 → 0.26、参数逼近真值 `w≈3, b≈5`。学习率发散实验使用 `train_demo.py`，其结果不能直接套用到不同数据范围的 `my_train.py` |
-| `python/second/train_demo.py` | `python3 python/second/train_demo.py` | Day 5 对照例子（华氏↔摄氏换算），跟 `my_train.py` 业务域不同 |
-| `python/second/Backward.py` | `python3 python/second/Backward.py` | 单层线性模型：Autograd 梯度 `dw=-8, db=-4`，一次更新后 Loss 4→0 |
-| `python/second/Backward2.py` | `python3 python/second/Backward2.py` | 两层线性网络：手写 Backward，四个梯度为 -24 / -12 / -18 / -6，一次更新后 Loss 9→约 1.192464 |
+按实际运行的脚本设置环境变量，Key 只保存在本地环境中，不写入代码或提交 Git：
 
-## 进度记录
+```bash
+# 历史 day1.py / day2.py：智谱 open.bigmodel.cn
+export ZHIPU_API_KEY="你自己的智谱 Key"
 
-- **第一周逐日进度** → [`第一周-执行表.md`](./第一周-执行表.md) 的「打卡区」：每天卡在哪、花了多久、以及当天最值钱的认知。
-- **第二周逐日进度** → [`第二周-执行表.md`](./第二周-执行表.md)：Java 手写 Agent 循环（B 线 4 天）+ A 线 Transformer 地基（3 天）。
-- **三个正式产出物** → 上面「学习地图」表的「状态」列，开一个改一个。
-- 跨产出物的通用笔记与学习表格放 `notes/`：[`notes/rag.md`](./notes/rag.md)（第一周 RAG 复盘）、[`notes/token.xlsx`](./notes/token.xlsx)（第二周 Self-Attention 手算）。
+# 当前 RAG 相关脚本及第三周实验：SiliconFlow api.siliconflow.cn
+export SILICONFLOW_API_KEY="你自己的 SiliconFlow Key"
+```
+
+第三周固定基线见 [`baseline.json`](./research-assistant/rag-lab/config/baseline.json)：SiliconFlow，Embedding `BAAI/bge-m3`，生成模型 `zai-org/GLM-5.3-Flash`，Top-K=3。历史 `python/first/` 脚本的模型与资料输入可能不同，不能直接当作第三周固定基线重跑入口；实验细节以执行表与记录为准。
+
+| 用途 | 运行方式（从项目根目录开始） |
+|---|---|
+| 历史模型调用 | `python3 python/first/day1.py` |
+| 历史对话服务 | `cd python/first && uvicorn day2:app --reload`，访问 `http://127.0.0.1:8000/xmy/?message=你好` |
+| 基础 RAG 检索 | `python3 python/first/day4.py` |
+| 基础 RAG 问答 | `python3 python/first/day5.py "你的问题"` |
+| 切分边界 / 标题栈观察 | `python3 python/first/day6.py` / `python3 python/first/day6_trace.py` |
+| PyTorch 训练循环 | `python3 python/second/my_train.py` |
+| 反向传播实验 | `python3 python/second/Backward.py` / `python3 python/second/Backward2.py` |
+
+## 文档导航
+
+| 需要了解什么 | 入口 |
+|---|---|
+| 当前任务、验收要求与每日打卡 | [`第三周-执行表.md`](./第三周-执行表.md) |
+| 长期路线、A/B 线与学习安排 | [`学习计划.md`](./学习计划.md) |
+| 广度自检与岗位覆盖 | [`了解清单.md`](./了解清单.md) |
+| 协作方式与学习规则 | [`CODEBUDDY.md`](./CODEBUDDY.md) |
+| RAG 复盘笔记 | [`notes/rag.md`](./notes/rag.md) |
+| Self-Attention 手算表格 | [`notes/token.xlsx`](./notes/token.xlsx) |
+
+从本目录开启会话，一次只推进当天任务；关窗口前将代码、结果与自己的解释落盘。详细过程写进对应执行表，README 只保留进度概览与入口。
