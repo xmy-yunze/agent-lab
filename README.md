@@ -10,12 +10,12 @@ Java 继续发展后端能力，Python 逐步发展独立构建 AI 应用与 Age
 
 ## 当前学习进度 · 第三周
 
-**Advanced RAG + Agent 工程实践**：在 Python 基础 RAG 上做诊断、方案选择与对照验证，Day 6 对照已有 Java Agent Loop。下一步：**Day 2 · Query Transformation**。
+**Advanced RAG + Agent 工程实践**：在 Python 基础 RAG 上做诊断、方案选择与对照验证，Day 6 对照已有 Java Agent Loop。Day 2 **核心学习通过，完整实验验收不完整**；下一步候选为 Day 3，尚未开始。
 
 | 天数 | 学习内容 | 状态 | 验收结果 |
 |---|---|---|---|
 | Day 1 | RAG 故障诊断 | ✅ 已完成 | **37/40（92.5%）**；8 dev Top-3、3 道生成测试；人工初步完整证据覆盖率 **5/6=83.3%** |
-| Day 2 | Query Transformation | ⬜ 未开始 | 待验收 |
+| Day 2 | Query Transformation | ✅ 核心学习通过；完整验收不完整 | 自实现函数、3 assert；面试追问 **9/10**；未保存 day2-pairs.jsonl、未做生成评估 |
 | Day 3 | BM25 + Hybrid Search | ⬜ 未开始 | 待验收 |
 | Day 4 | Reranking | ⬜ 未开始 | 待验收 |
 | Day 5 | RAG Evaluation | ⬜ 未开始 | 待验收 |
@@ -23,6 +23,8 @@ Java 继续发展后端能力，Python 逐步发展独立构建 AI 应用与 Age
 | Day 7 | 独立解决陌生问题 | ⬜ 未开始 | 待验收 |
 
 任务与逐日打卡以 [`第三周-执行表.md`](./第三周-执行表.md) 为准。Day 1 的 case-03 检索证据不完整，case-04 正确拒答；详见 [Day 1 诊断报告](./research-assistant/rag-lab/reports/day1-diagnosis.md)。完整生成 Prompt / 原始回答日志尚未落盘；上述覆盖率为人工初步评估，不等同于正式宏平均 Recall@3，也不代表已有优化提升。
+
+Day 2：B3/B4 独立查询对照已完成；初始规则运行 8 dev 题但 0/8 触发。case-03 扩展后 Top-3 从 B1/B2/B5 变为 B5/B3/B1，阶段证据覆盖仍为 3/5，未证明整体召回提升。详见执行表打卡记录与 `research-assistant/rag-lab/reports/day2-choice.md`。
 
 ### 历史摘要
 
