@@ -14,3 +14,7 @@ __pycache__/
 # Gradle / Java 构建产物（可重新生成，别提交）
 build/
 .gradle/
+
+# 本地 AI 学习上下文
+CURRENT.md
+CHATGPT.md

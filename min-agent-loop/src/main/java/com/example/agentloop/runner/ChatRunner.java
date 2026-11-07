@@ -47,7 +47,7 @@ public class ChatRunner implements CommandLineRunner {
         final int MAX_ROUNDS = 10;
         int consecutiveFail = 0;
         final int MAX_CONSECUTIVE_FAIL = 3;
-        while (true) {
+        agentLoop: while (true) {
             if (round >= MAX_ROUNDS) {
                 System.out.println("【退出】已达到最大轮次" + MAX_ROUNDS + "，强制终止Agent循环");
                 break;
@@ -96,7 +96,7 @@ public class ChatRunner implements CommandLineRunner {
                     String toolResult;
                     try {
                         toolResult = ToolRegistry.executeMockTool(call.function().name(), argsJson);
-                        consecutiveFail = 0;
+                        consecutiveFail = nextFailureCount(consecutiveFail, toolResult);
 
                     } catch (Exception e) {
                         toolResult = "工具调用异常：" + e.getMessage();
@@ -107,10 +107,11 @@ public class ChatRunner implements CommandLineRunner {
                     ChatMessage toolMsg = ChatMessage.tool(toolResult, call.id());
                     messages.add(toolMsg);
                     System.out.println(">>> 已把tool结果添加进messages列表");
-                }
-                if (consecutiveFail >= MAX_CONSECUTIVE_FAIL) {
-                    System.out.println("【退出‑工具执行失败】连续" + consecutiveFail + "次工具执行失败，强制终止Agent循环");
-                    break;
+                    // 每次工具执行后立即检查，防止同一批后续成功把失败记录清零。
+                    if (consecutiveFail >= MAX_CONSECUTIVE_FAIL) {
+                        System.out.println("【退出‑工具执行失败】连续" + consecutiveFail + "次工具执行失败，强制终止Agent循环");
+                        break agentLoop;
+                    }
                 }
             } else {
                 System.out.println("【退出‑正常完成】模型不再调用工具，任务结束");
@@ -118,5 +119,11 @@ public class ChatRunner implements CommandLineRunner {
                 break;
             }
         }
+    }
+
+    static int nextFailureCount(int consecutiveFail, String toolResult) {
+        // 工具正常返回不代表执行成功；现有 error 返回也必须计入失败。
+        var result = ToolRegistry.MAPPER.readTree(toolResult);
+        return result.has("error") ? consecutiveFail + 1 : 0;
     }
 }

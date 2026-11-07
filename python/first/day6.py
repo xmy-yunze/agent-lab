@@ -1,5 +1,5 @@
 import os, tempfile
-from python.frist.rag import split_chunks
+from rag import split_chunks
 
 CASES = {
     "标准 ##/###": """## 一

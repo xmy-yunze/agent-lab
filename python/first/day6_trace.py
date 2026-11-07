@@ -2,7 +2,7 @@
 Day 6 · 标题栈观察台（教学脚本，不是生产代码）
 
 用途：把「逐行扫 + 标题栈」这件事打印出来看，看清它是怎么走的。
-跑法：.venv/bin/python python/day6_trace.py
+跑法：.venv/bin/python python/first/day6_trace.py
 
 ⚠️ 真正要改的是 rag.py 里的 split_chunks —— 那份由你自己敲。
    这个脚本只负责：① 让你看见栈怎么动 ② 给你一个「靶子」（修复后应该是多少段）

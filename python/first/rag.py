@@ -1,7 +1,7 @@
 import os,re,requests
 import numpy as np
 
-EMBED_URL="https://open.bigmodel.cn/api/paas/v4/embeddings"
+EMBED_URL="https://api.siliconflow.cn/v1/embeddings"
 # HEADING_RE=re.compile(r"^(#{1,6}) +(.*)$")
 # MIN_SPLIT_LEVEL=2          # 最低切分级别：2 表示 ## 及以上才切，# 不切
 # def split_chunks(path):
@@ -10,7 +10,7 @@ EMBED_URL="https://open.bigmodel.cn/api/paas/v4/embeddings"
 #     raw=re.split(r"\n(?=#{2,} )", text)
 #     return [c for c in raw if len(c)!=0]
 
-EMBED_URL="https://open.bigmodel.cn/api/paas/v4/embeddings"
+EMBED_URL="https://api.siliconflow.cn/v1/embeddings"
 HEADING_RE=re.compile(r"^(#{1,6}) +(.*)$")
 MIN_SPLIT_LEVEL=2
 
@@ -56,8 +56,8 @@ def split_chunks(path):
 
 def embed(texts):
     r=requests.post(EMBED_URL,
-                headers={"Authorization": f"Bearer {os.environ['ZHIPU_API_KEY']}"},
-                json={"model":"embedding-3","input":texts},)
+                headers={"Authorization": f"Bearer {os.environ['SILICONFLOW_API_KEY']}"},
+                json={"model":"BAAI/bge-large-zh-v1.5","input":texts},)
     if r.status_code!=200:
         raise RuntimeError(f"embedding failed: {r.status_code} {r.text}")
     d=r.json()

@@ -1,9 +1,9 @@
 import numpy as np
-from python.frist.rag import split_chunks, embed, retrieve
+from rag import split_chunks, embed, retrieve
 import os,requests,sys
 
-CHAT_URL="https://open.bigmodel.cn/api/paas/v4/chat/completions"
-MODEL="glm-4.7"
+CHAT_URL="https://api.siliconflow.cn/v1/chat/completions"
+MODEL="zai-org/GLM-5.3-Flash"
 
 PROMPT_TEMPLATE = """你是一个资料助手，只依据下面提供的资料回答问题。
 ===== 资料 =====
@@ -22,7 +22,7 @@ def build_prompt(question, hits):
 
 def ask(prompt):
     r=requests.post(CHAT_URL,
-                headers={"Authorization": f"Bearer {os.environ['ZHIPU_API_KEY']}"},
+                headers={"Authorization": f"Bearer {os.environ['SILICONFLOW_API_KEY']}"},
                 json={"model":MODEL,"temperature":0,"messages":[{"role":"user","content":prompt}]},
                 timeout=60)
     if r.status_code!=200:
@@ -32,7 +32,9 @@ def ask(prompt):
 
 if __name__=="__main__":
     question=sys.argv[1] if len(sys.argv)>1 else "KV Cache 是什么？"
-    chunks=split_chunks("学习计划.md")  
+    chunks=split_chunks("research-assistant/rag-lab/corpus/学习计划.md")  
+    # print("Chunk数量：",len(chunks))
+    # print("第一个Chunk：", chunks[0][:100]) 
     mat=np.array(embed(chunks))  
     hits=retrieve(question,chunks,mat,k=3)
     for idx, score, text in hits:
