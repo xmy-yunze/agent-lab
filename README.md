@@ -10,14 +10,14 @@ Java 继续发展后端能力，Python 逐步发展独立构建 AI 应用与 Age
 
 ## 当前学习进度 · 第三周
 
-**Advanced RAG + Agent 工程实践**：在 Python 基础 RAG 上做诊断、方案选择与对照验证，Day 6 对照已有 Java Agent Loop。Day 3 **核心学习完成，面试验收 24/30 通过**，可进入 Day 4 Reranking（尚未开始）；Day 2 完整实验验收不完整，Day 3 完整实验产出未全部确认。
+**Advanced RAG + Agent 工程实践**：在 Python 基础 RAG 上做诊断、方案选择与对照验证，Day 6 对照已有 Java Agent Loop。Day 4 **核心学习完成，面试验收 19/20**，下一步是 Day 5 RAG Evaluation；Day 2 完整实验验收不完整，Day 3 完整实验产出未全部确认。
 
 | 天数 | 学习内容 | 状态 | 验收结果 |
 |---|---|---|---|
 | Day 1 | RAG 故障诊断 | ✅ 已完成 | **37/40（92.5%）**；8 dev Top-3、3 道生成测试；人工初步完整证据覆盖率 **5/6=83.3%** |
 | Day 2 | Query Transformation | ✅ 核心学习通过；完整验收不完整 | 自实现函数、3 assert；面试追问 **9/10**；未保存 day2-pairs.jsonl、未做生成评估 |
 | Day 3 | BM25 + Hybrid Search | ✅ 核心学习完成；面试验收通过 | 3 题各 8/10，24/30；25 chunks 三路对照；Hybrid 覆盖仍 3/5；完整产出未全部确认 |
-| Day 4 | Reranking | ⬜ 未开始 | 待验收 |
+| Day 4 | Reranking | ✅ 核心学习完成；面试验收 19/20 | Cross-Encoder 成功加载并评分；case-03 阶段证据覆盖 1/5 → 2/5 |
 | Day 5 | RAG Evaluation | ⬜ 未开始 | 待验收 |
 | Day 6 | ReAct 与已有 Agent 工程 | ⬜ 未开始 | 待验收 |
 | Day 7 | 独立解决陌生问题 | ⬜ 未开始 | 待验收 |
@@ -27,6 +27,8 @@ Java 继续发展后端能力，Python 逐步发展独立构建 AI 应用与 Age
 Day 2：B3/B4 独立查询对照已完成；初始规则运行 8 dev 题但 0/8 触发。case-03 扩展后 Top-3 从 B1/B2/B5 变为 B5/B3/B1，阶段证据覆盖仍为 3/5，未证明整体召回提升。详见执行表打卡记录与 `research-assistant/rag-lab/reports/day2-choice.md`。
 
 Day 3：手写 BM25 / Top-K 与 RRF，完成 jieba 及领域词分词调试。case-03 的 Dense / 优化后 BM25 / Hybrid 阶段覆盖分别为 3/5、1/5、3/5；Hybrid 仅改变证据组成，未证明覆盖提升。五个独立阶段 chunk 与最终 Top-K=3 存在结构性限制。详细排名、验收及未确认产出见执行表 Day 3 打卡。
+
+Day 4：Dense Top-10 + BM25 Top-10 经 RRF 融合后，由 `BAAI/bge-reranker-v2-m3` 对候选重排。case-03 的覆盖变化来自同一次单题对照，总体效果留待 Day 5 评估。详见执行表 Day 4 打卡。
 
 ### 历史摘要
 
